@@ -11,8 +11,8 @@ Nubie gives you straightforward access to DI using [tsyringe](https://github.com
 ## Registering Services
 
 ```ts
-NubieDi.addSingleton("IAuthService", GithubAuthService);
-// NubieDi.addTransient("IAuthService", GithubAuthService);
+NubieContainer.addSingleton("IAuthService", GithubAuthService);
+// NubieContainer.addTransient("IAuthService", GithubAuthService);
 
 /** Injection */
 @ApiController()

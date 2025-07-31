@@ -4,21 +4,32 @@ sidebar_position: 2
 
 # Installation
 
-So you're ready to leave the boilerplate behind and build your first Nubie app?  
-Good choice, fellow Nubie. Let’s get you up and running — fast, fun, and frustration-free.
+Ready to leave boilerplate behind and build your first Nubie app?  
+Great choice. Let’s get you up and running — fast, clean, and frustration-free.
 
-## Create A Project
+## 1. Create a New Project
 
-Clone The Starter Template
+Start by cloning the official starter template:
 
-```sh
+```bash
 git clone https://github.com/ronitkrshah/nubie-starter-template.git MyApi --depth=1
 ```
 
-Install Dependencies With Your Favourite Package Manager
+Then install the dependencies using your preferred package manager:
 
-## Build & Run
+```bash
+cd MyApi
+npm install   # or yarn / pnpm install
+```
+
+## 2. Build & Run
+
+Compile your TypeScript project and start the server:
 
 ```bash
 npx tsc && node dist/index.js
 ```
+
+That's it — your API is now live.
+
+> Pro tip: The starter comes pre-configured with decorators, DI, validation, and error handling — so you can focus on building features, not setup code.

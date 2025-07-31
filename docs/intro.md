@@ -4,44 +4,93 @@ sidebar_position: 1
 
 # Welcome to Nubie
 
-**Nubie is a TypeScript WebAPI framework for noobs, gawds, and everyone in between.**  
-Built on Express. Inspired by .NET WebAPI. Fueled by decorators, chill vibes, and zero boilerplate.
+**Nubie is a TypeScript WebAPI framework for nubs, gawds, and curious devs in-between.**  
+Built on Express. Inspired by .NET WebAPI. Powered by decorators, zero boilerplate, and the idea that backend code should just make sense.
 
-## 🤔 What is Nubie?
+---
 
-Nubie is what happens when you’re tired of writing the same routing code, fighting middleware, and repeating:
+## Why Nubie?
+
+Let’s face it — setting up backend APIs with raw Express can feel like an endless checklist:
+
+- Writing boilerplate routes by hand.
+- Parsing inputs manually.
+- Wiring up dependencies without a clear pattern.
+- Cobbling together middleware.
+- Repeating `app.get(...)` until you forget why you started.
+
+Nubie was created to remove that pain.
+
+### A Weekend Experiment
+
+“What if we could write APIs like we do in .NET — but in TypeScript — and actually enjoy it?”
+
+That idea sparked a minimal, decorator-driven, opinionated framework that handles routing, validation, dependency injection, and more without draining your will to live.
+
+---
+
+## What is Nubie?
+
+Nubie is a WebAPI framework built for beginners and seasoned developers alike. It gets you from a blank editor to a working API in record time, with code that’s readable, scalable, and even entertaining to write.
+
+It layers on Express, so you retain all of its power, while providing a modern, intuitive API through decorators such as `@ApiController`, `@HttpPost`, `@Query`, and `@Inject`.
+
+Here’s a simple example:
 
 ```ts
-app.get('/thing', (req, res) => { ... });
+@ApiController()
+class UsersController {
+  private readonly _userService: IUserService;
+
+  public constructor(@Inject("IUserService") userService: IUserService) {
+    this._userService = userService;
+  }
+
+  @HttpGet("/")
+  public async getAllUsersAsync() {
+    return HttpResponse.Ok(this.userService.getAll());
+  }
+
+  @HttpPost("/")
+  @BodyValidation(CreateUserDto)
+  public async createUserAsync(@Body() userDto: CreateUserDto) {
+    return HttpResponse.Created(this.userService.create(userDto));
+  }
+}
 ```
 
-Over.
-And over.
-And over again.
+This code is clear, concise, and free of unnecessary wiring.
 
-With Nubie, you just write a class, sprinkle in some decorators like `@ApiController`, `@HttpGet`, or `@Body`, and _boom_, your API is live.
-It handles routing, validation, file uploads, DI, and JWT — with **almost no config**.
+### What the Code Does
 
----
+- `@ApiController()` marks the class as an API controller.
+- `@Inject("IUserService")` injects a user service implementation.
+- `@HttpGet("/")` and `@HttpPost("/")` define GET and POST endpoints on the same route.
+- `@BodyValidation(CreateUserDto)` enforces that incoming payloads match the expected format.
+- Service methods return structured HTTP responses via `HttpResponse`.
 
-## ✨ What Makes It Nubie (™️)?
+### Final Endpoint Structure
 
-- **🧩 Decorator-Driven** – Define your routes, params, headers, and even uploads with clean annotations.
-- **🔐 Auth, Built-in** – Just add `@Roles('admeme')` to protect routes. No more trusting `Bearer banana`.
-- **📦 Validation, Outta the Box** – Auto-reject nonsense like `age: "potato"`.
-- **💉 Dependency Injection** – Use `@Inject()` to wire up services like a true backend dev.
-- **🧼 Minimal Setup** – No `app.use`, no `app.listen`, no stress. Just `createServer()` and go.
+By convention, Nubie uses `v1` as the global route prefix and derives the base path from the controller name.
 
----
+UsersController → `/users`
 
-## 🧠 Who is it for?
+```
+[GET] http://localhost:4321/api/v1/users
+[POST] http://localhost:4321/api/v1/users
+```
 
-- 🐣 **Backend beginners** who want to feel like API wizards.
-- 👩‍🔧 **Experienced devs** who want speed and structure without the ceremony.
-- 👻 Anyone who thinks writing Express routers over and over again is a form of spiritual punishment.
+Your route decorators operate relative to this base, with no extra configuration necessary.
 
 ---
 
-> Made with love (and a little chaos) by [RKS](https://github.com/ronitkrshah)
+## Key Features
 
----
+- Decorator-driven routing, validation, and input parsing.
+- Built-in Auth & Roles – Lock routes behind `@Roles('admin')` and trust JWTs.
+- Automatic request validation that stops invalid data before it reaches your logic.
+- Simple dependency injection via `@Inject()`.
+- Zero boilerplate: skip manual middleware setup and response formatting.
+- Plug-and-play Express compatibility — use any Express middleware under the hood.
+
+Made with care by [RKS](https://github.com/ronitkrshah)
