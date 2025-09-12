@@ -50,7 +50,7 @@ async deleteUserAsync() {
 
 ## Manual Token Handling with `JWTToken` Class
 
-If you need to generate or manually verify tokens (e.g., in CLI tools or non-route logic):
+If you need to generate or manually verify tokens (e.g non-route logic):
 
 ```ts
 import { JWTToken } from "nubie";

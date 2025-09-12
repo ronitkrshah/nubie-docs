@@ -6,8 +6,8 @@ sidebar_position: 5
 
 Nubie provides a robust way to build custom decorators via two abstract classes:
 
-- `NubieExtensionMethodDecorator` — for method-level behaviors (e.g. enforcing headers)
-- `NubieExtensionParamDecorator` — for parameter-level access (e.g. custom param extractors)
+- `MethodExtensionDecorator` — for method-level behaviors (e.g. enforcing headers)
+- `ParamExtensionDecorator` — for parameter-level access (e.g. custom param extractors)
 
 These give you full control over request/response handling without diving into middleware manually.
 
@@ -21,13 +21,9 @@ Create decorators that run before route handlers and access full Express `req`, 
 
 ```ts
 import { Request, Response, NextFunction } from "express";
-import {
-  NubieExtensionMethodDecorator,
-  NubieError,
-  HttpStatusCodes,
-} from "nubie";
+import { MethodExtensionDecorator, NubieError } from "nubie";
 
-class HeaderDecorator extends NubieExtensionMethodDecorator {
+class HeaderDecorator extends MethodExtensionDecorator {
   constructor(public readonly key: string) {
     super();
   }
@@ -40,13 +36,13 @@ class HeaderDecorator extends NubieExtensionMethodDecorator {
     if (req.headers[this.key]) return;
     throw new NubieError(
       "MissingRequiredHeader",
-      HttpStatusCodes.BadRequest,
+      400,
       `${this.key} is missing in request headers`
     );
   }
 }
 
-const Header = NubieExtensionMethodDecorator.createDecorator(HeaderDecorator);
+const Header = MethodExtensionDecorator.createDecorator(HeaderDecorator);
 
 export default Header;
 ```
@@ -73,9 +69,9 @@ Build custom parameter decorators that return extracted values — like `req.par
 
 ```ts
 import { Request, Response, NextFunction } from "express";
-import { NubieExtensionParamDecorator } from "nubie";
+import { ParamExtensionDecorator } from "nubie";
 
-class ParamDecorator extends NubieExtensionParamDecorator {
+class ParamDecorator extends ParamExtensionDecorator {
   constructor(public readonly param: string) {
     super();
   }
@@ -85,7 +81,7 @@ class ParamDecorator extends NubieExtensionParamDecorator {
   }
 }
 
-const Param = NubieExtensionParamDecorator.createDecorator(ParamDecorator);
+const Param = ParamExtensionDecorator.createDecorator(ParamDecorator);
 
 export default Param;
 ```

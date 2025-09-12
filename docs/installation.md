@@ -7,29 +7,31 @@ sidebar_position: 2
 Ready to leave boilerplate behind and build your first Nubie app?  
 Great choice. Let’s get you up and running — fast, clean, and frustration-free.
 
-## 1. Create a New Project
+## 1. Clone the Starter Project
 
-Start by cloning the official starter template:
+Start by cloning the the starter template:
 
 ```bash
 git clone https://github.com/ronitkrshah/nubie-starter-template.git MyApi --depth=1
 ```
 
-Then install the dependencies using your preferred package manager:
+This gives you a ready-to-use Nubie project with everything preconfigured.
+
+## 2. Install Dependencies
+
+You can also use `yarn` or `pnpm` if preferred.
 
 ```bash
 cd MyApi
 npm install   # or yarn / pnpm install
 ```
 
-## 2. Build & Run
+## 3. Run the Server
 
 Compile your TypeScript project and start the server:
 
 ```bash
-npx tsc && node dist/index.js
+npx tsc && node build/index.js
 ```
 
-That's it — your API is now live.
-
-> Pro tip: The starter comes pre-configured with decorators, DI, validation, and error handling — so you can focus on building features, not setup code.
+Your API will be live at: `http://localhost:8080/api/v1`

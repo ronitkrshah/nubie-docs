@@ -53,7 +53,7 @@ The decorator supports three file upload modes:
 ```ts
 @FileUpload("avatar", FileUploadType.Single)
 @Post("/profile")
-updateProfile(@File() file: any) {
+async updateProfileAsync(@File() file: MulterFile) {
 }
 ```
 
@@ -62,7 +62,7 @@ updateProfile(@File() file: any) {
 ```ts
 @FileUpload("photos", FileUploadType.Multiple, 5)
 @Post("/album")
-uploadPhotos(@Files() files: any) {
+async uploadPhotosAsync(@Files() files: MulterFile[]) {
 }
 ```
 
@@ -74,7 +74,7 @@ uploadPhotos(@Files() files: any) {
   { name: "certificates", maxCount: 3 }
 ])
 @Post("/job/apply")
-applyForJob(@Files() files: any) {
+async applyForJobAsync(@Files() files: MulterFile[]) {
 }
 ```
 
